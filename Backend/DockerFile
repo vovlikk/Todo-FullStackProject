@@ -1,0 +1,23 @@
+# ---------- Build stage ----------
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Копируем csproj
+COPY TodoList-Fullstack.csproj ./
+RUN dotnet restore "TodoList-Fullstack.csproj"
+
+# Копируем весь backend проект
+COPY . .
+
+# Публикуем
+RUN dotnet publish "TodoList-Fullstack.csproj" -c Release -o /app/publish
+
+# ---------- Runtime stage ----------
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+# Render использует PORT (10000)
+ENV ASPNETCORE_URLS=http://+:10000
+
+ENTRYPOINT ["dotnet", "TodoList-Fullstack.dll"]
