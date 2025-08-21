@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.Welcomepage-header{
+    background-color: aqua;
+    min-height: 50px;
+    width: 100%;   
+}
+
+.Welcome-header-section{
+    padding-top: 30px;
+    padding: 20px;
+    width: 1470px;
+    margin: 0 auto;
+    background-color: aliceblue;
+    display: flex;
+    align-items: center;
+    gap: 120px;
+    justify-content: space-between;
+}

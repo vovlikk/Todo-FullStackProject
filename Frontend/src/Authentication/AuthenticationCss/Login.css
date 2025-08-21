@@ -1,0 +1,63 @@
+
+.Welcome-Page-Login-Overlay{
+    height: 93vh;
+    z-index: 999;
+    width: 100%;
+    top: 0;
+    left: 0;
+     background-color: rgba(88, 88, 88, 0.5); 
+    display: flex;
+    justify-content: center;
+   
+}
+
+.Welcome-Page-Section{
+    width: 1000px;
+    height: 500px;
+    background-color: aqua;
+    padding: 40px;
+     margin-top: 150px;
+     border-radius: 30px;
+}
+
+.Welcome-Page-Login-Overlay .Welcome-Page-Section {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.welcome-page-form{
+    background-color: aliceblue;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.welcome-page-form input{
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+}
+
+.welcome-page-form button{
+    min-width: 200px;
+    min-height: 30px;
+    margin: 0 auto;
+    border-radius: 10px;
+    border-radius: none;
+    background-color: rgba(37, 37, 255, 0.847);
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.welcome-page-form button:hover {
+  background-color: #1a1aff;
+  transform: scale(1.03);
+  transition: 0.2s;
+}
