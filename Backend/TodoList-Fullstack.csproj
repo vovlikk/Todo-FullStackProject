@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Admin\**" />
+    <Compile Remove="Controllers\User\**" />
+    <Content Remove="Controllers\Admin\**" />
+    <Content Remove="Controllers\User\**" />
+    <EmbeddedResource Remove="Controllers\Admin\**" />
+    <EmbeddedResource Remove="Controllers\User\**" />
+    <None Remove="Controllers\Admin\**" />
+    <None Remove="Controllers\User\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
@@ -17,11 +28,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\User\" />
-    <Folder Include="Controllers\Admin\" />
   </ItemGroup>
 
 </Project>
