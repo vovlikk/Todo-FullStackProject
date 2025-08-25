@@ -13,7 +13,7 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<TodoListDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("Build")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         builder.Services.AddIdentity<IdentityUser, IdentityRole>(option =>
         {
@@ -31,7 +31,7 @@ internal class Program
         {
             policy.AddDefaultPolicy(builder =>
             {
-                builder.WithOrigins("http://localhost:3000", "https://localhost:3000")
+                builder.WithOrigins("http://localhost:3000", "https://1024b7c59d72.ngrok-free.app")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             });
@@ -74,7 +74,7 @@ internal class Program
         app.UseCors();
 
 
-        app.UseHttpsRedirection();
+        
 
         app.UseAuthentication();
         app.UseAuthorization();
