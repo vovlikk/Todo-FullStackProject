@@ -13,7 +13,7 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<TodoListDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Build")));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("Build")));
 
         builder.Services.AddIdentity<IdentityUser, IdentityRole>(option =>
         {
