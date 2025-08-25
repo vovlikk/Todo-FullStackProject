@@ -1,21 +1,65 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-.Welcomepage-header{
-    background-color: aqua;
-    min-height: 50px;
-    width: 100%;   
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.Welcome-header-section{
-    padding-top: 30px;
-    padding: 20px;
-    width: 1470px;
-    margin: 0 auto;
-    background-color: aliceblue;
+.Welcomepage-header {
+  width: 100%;
+  min-height: 70px;
+ 
+  box-shadow: 0 2px 5px #999;
+}
+
+.Welcome-header-section {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Welcomepage-header-logo h3 {
+  font-size: 30px;
+  font-weight: 500;
+  color: #000;
+}
+
+.Welcome-header-button {
+  display: flex;
+  gap: 20px; 
+  background-color: #fff;
+}
+
+.Welcomepage-header-button{
     display: flex;
+    gap: 40px;
     align-items: center;
-    gap: 120px;
-    justify-content: space-between;
+}
+.Welcomepage-header-button button {
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  min-width: 100px;
+  min-height: 30px;
+  color: white;
+  background: rgba(37, 117, 252, 0.7); 
+  padding: 10px;
+ 
+}
+
+
+.Welcomepage-header-button button:hover {
+  
+  transform: scale(1.03);
+}
+
+
+.Welcomepage-header-button button:focus {
+  outline: none;
+  transform: scale(1.02);
 }

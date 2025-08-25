@@ -1,0 +1,73 @@
+.Welcome-Support-Container {
+  height: 94vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4b9b9; /* светлый фон */
+}
+
+.Welcome-Support-Form {
+  width: 450px;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background-color: #2575fc; /* основной цвет */
+  color: white;
+  text-align: center;
+}
+
+.Welcome-Support-Form h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.Welcome-Support-Form input {
+  width: 100%;
+  height: 45px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  padding: 0 15px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  transition: 0.3s;
+}
+.Welcome-Support-Form ::placeholder{
+    color: white;
+}
+
+.Welcome-Support-Form input:focus {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.Welcome-Support-Form p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #e0e0e0;
+}
+
+.Welcome-Support-Form button {
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-radius: 12px;
+  background-color: #ff5ea3;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+ 
+}
+
+.Welcome-Support-Form button:hover {
+  transform: scale(1.01);
+  
+}
+
+.Welcome-Support-Form .error-message {
+  color: #ff4d4f;
+  margin-top: 15px;
+}

@@ -1,11 +1,12 @@
 import WelcomePageHeader from '../WelcomePageComponents/WelcomePageHeader';
-import WelcomeInfo from '../WelcomePageComponents/WelcomePageInfo';
+import WelcomeHome from '../WelcomePageComponents/WelcomeHome';
+
 
 function WelcomeLanding(){
     return(
         <div>
             <WelcomePageHeader />
-          
+          <WelcomeHome />
         </div>
     )
 }

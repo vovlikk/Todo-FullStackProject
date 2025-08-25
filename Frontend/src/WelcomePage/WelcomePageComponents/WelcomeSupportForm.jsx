@@ -1,6 +1,7 @@
 import { useState } from "react";
+import '../WelcomePageComponentsCss/WelcomeSupportForm.css'
 
-function WelcomeSupportForm(){
+function WelcomeSupportForm({onClose}){
     const[supportSms,setSupportSms] = useState('');
     const[loading,setLoading] = useState(false);
     const[error,setError] = useState(null);
@@ -40,13 +41,20 @@ function WelcomeSupportForm(){
         
     }
     return(
-        <div className="Welcome-Support-Container">
-            <form onSubmit={SendSupport}>
-                <input type="text" value={supportSms} placeholder="Enter your Text" onChange={(e) => setSupportSms(e.target.value)} maxLength={500}  />
+        <div className="Welcome-Support-Container" onClick={onClose}>
+            <form className="Welcome-Support-Form"  onSubmit={SendSupport} onClick={(e) => e.stopPropagation()}>
+                <h2>Support Form</h2>
+                <input 
+                type="text" 
+                value={supportSms} 
+                placeholder="Enter your Text" 
+                onChange={(e) => setSupportSms(e.target.value)} 
+                maxLength={500} 
+                />
                 <p>{supportSms.length} / 500</p>
-                <button type="submit">{loading ? "Sending":"Send"}</button>
+                <button type="submit">{loading ? "Sending" : "Send"}</button>
+                {error && <p className="error-message">{error}</p>}
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
     )
 }

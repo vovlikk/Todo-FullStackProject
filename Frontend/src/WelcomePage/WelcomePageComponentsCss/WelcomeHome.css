@@ -1,0 +1,38 @@
+
+.welcome-container{
+    margin-top: 100px;
+    width: 100%;
+    
+}
+.welcome-home-section{
+    width: 1600px;
+    display: flex;
+    gap: 100px;
+    align-items: center;
+    padding: 100px;
+    background-color: aliceblue;
+    margin:  0 auto;
+    border-radius: 30px;
+}
+
+.welcome-home-img img {
+    height: 500px;
+    border-radius: 30px;
+    width: 800px;
+}
+.welcome-home-text{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.welcome-home-text h3{
+    font-size: 40px;
+    font-weight: 500;
+}
+.welcome-home-text p{
+    font-size: 18px;       
+    line-height: 1.6;      
+    color: #333;           
+    margin-bottom: 20px;   
+}
