@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import "../Authentication/AuthenticationCss/Login.css";
 import logo from "../Authentication/AuthenticationImg/BackgroundAuthentication.png";
+import api from "../Connect/Connect";
 
 function WelcomePageLogin({ onClose }) {
   const [userName, setUserName] = useState("");
@@ -19,7 +20,7 @@ function WelcomePageLogin({ onClose }) {
     const info = { username: userName, password: Password };
 
     try {
-      const response = await fetch("", {
+      const response = await fetch(`${api}/api/Authentication/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,12 +37,23 @@ function WelcomePageLogin({ onClose }) {
       localStorage.setItem("token", data.token);
 
       const decoded = jwtDecode(data.token);
-      const roles = decoded.role || decoded.roles;
+      console.log("Decoded JWT:", decoded);
 
-      if (Array.isArray(roles) ? roles.includes("User") : roles === "User") {
+      const role =
+        decoded["role"] ||
+        decoded["roles"] ||
+        decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+      const normalizedRole = Array.isArray(role)
+        ? role.map((r) => r.toLowerCase())
+        : [role?.toLowerCase()];
+
+      if (normalizedRole.includes("user")) {
         navigate("/user");
-      } else {
+      } else if (normalizedRole.includes("admin")) {
         navigate("/admin");
+      } else {
+        navigate("/");
       }
 
       setUserName("");
@@ -55,9 +67,11 @@ function WelcomePageLogin({ onClose }) {
 
   return (
     <div className="Welcome-Page-Login-Overlay" onClick={onClose}>
-      <div className="Welcome-Page-Section" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="Welcome-Page-Section"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="login-header">
-          
           <h2>Welcome Back</h2>
           <p>Login to your account</p>
         </div>

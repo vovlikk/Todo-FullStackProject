@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../WelcomePageComponentsCss/WelcomeSupportForm.css'
+import api from '../../Connect/Connect'
 
 function WelcomeSupportForm({onClose}){
     const[supportSms,setSupportSms] = useState('');
@@ -10,15 +11,15 @@ function WelcomeSupportForm({onClose}){
         e.preventDefault();
         setLoading(true);
         setError(null);
-        const info = {support:supportSms};
+        const info = {title:supportSms};
         
         try{
-            const token = localStorage.getItem('token');
-            const response = await fetch('',{
+            
+            const response = await fetch(`${api}/api/Support/SendSupportSms`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",
-                    Authorization:`Bearer ${token}`
+                    
                 },
                 body:JSON.stringify(info)
             })

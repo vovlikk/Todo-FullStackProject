@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../Authentication/AuthenticationCss/Register.css";
+import api from '../Connect/Connect'
 
 function WelcomeRegister({ onClose }) {
   const [regemail, setRegEmail] = useState("");
@@ -28,7 +29,7 @@ function WelcomeRegister({ onClose }) {
     }
 
     try {
-      const response = await fetch("", {
+      const response = await fetch(`${api}/api/Authentication/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(info),

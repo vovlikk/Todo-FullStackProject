@@ -1,0 +1,118 @@
+
+.user-dash-board-wrapper{
+    display: flex;
+}
+
+.user-dash-board-panel-container{
+    width: 300px;
+    height: 890px;
+    background-color: black;
+    padding-top: 30px;
+}
+
+.user-dash-board-panel-section{
+    width: 280px;
+    height: 800px;
+    
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.user-dash-board-panel-info{
+    margin: 0 auto;
+    width: 250px;
+}
+
+.user-dash-board-panel-info h3{
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    padding-left: 40%;
+}
+
+.user-dash-board-panel-info h2{
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    padding-left: 25%;
+}
+
+.user-dash-board-panel-buttons-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 250px;
+    margin: 0 auto;
+    
+    padding: 10px;
+}
+
+.user-panel-button{
+    display: flex;
+    gap: 40px;
+}
+
+.user-panel-button button{
+    width: 220px;
+    height: 40px;
+    display: flex;
+    gap: 12px; 
+    align-items: center;
+    border-radius: 10px;
+    background-color: black;
+    color: aliceblue; 
+    font-size: 16px;
+    font-weight: 300;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+.user-panel-button img{
+    width: 24px; 
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+
+.user-panel-button button:hover{
+    color: #FF6767;
+    background-color: #FFFFFF;
+}
+
+
+.user-panel-button-exit {
+    display: flex;
+    justify-content: center; 
+    margin-top: 300px;
+}
+
+.user-panel-button-exit button {
+    width: 220px;
+    height: 40px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border-radius: 10px;
+    background-color: black;
+    color: aliceblue;
+    font-size: 16px;
+    font-weight: 300;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.user-panel-button-exit button svg {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+.user-panel-button-exit button:hover {
+    color: #FF6767;
+    background-color: #FFFFFF;
+}
+
