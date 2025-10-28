@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode"; // default import для v3.1.2
 import { useNavigate } from "react-router-dom";
-import "../Authentication/AuthenticationCss/Login.css";
-import logo from "../Authentication/AuthenticationImg/BackgroundAuthentication.png";
 import api from "../Connect/Connect";
 
 function WelcomePageLogin({ onClose }) {
@@ -17,26 +15,25 @@ function WelcomePageLogin({ onClose }) {
     setError(null);
     setLoading(true);
 
-    const info = { username: userName, password: Password };
-
     try {
-      const response = await fetch(`${api}/api/Authentication/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(info),
-      });
+      const response = await fetch(`https://565aae370d52.ngrok-free.app/api/Authentication/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      "ngrok-skip-browser-warning": "true",
+      body: JSON.stringify(info),
+    });
 
       if (!response.ok) {
         const text = await response.text();
-        throw new Error("Fail to login " + text);
+        throw new Error("Fail to login: " + text);
       }
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
 
-      const decoded = jwtDecode(data.token);
+      const decoded = jwtDecode(data.token); 
       console.log("Decoded JWT:", decoded);
 
       const role =
@@ -48,57 +45,42 @@ function WelcomePageLogin({ onClose }) {
         ? role.map((r) => r.toLowerCase())
         : [role?.toLowerCase()];
 
-      if (normalizedRole.includes("user")) {
-        navigate("/user");
-      } else if (normalizedRole.includes("admin")) {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
+      if (normalizedRole.includes("user")) navigate("/user");
+      else if (normalizedRole.includes("admin")) navigate("/admin");
+      else navigate("/");
 
       setUserName("");
       setPassword("");
     } catch (err) {
-      setError("Fail to login: " + err.message);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="Welcome-Page-Login-Overlay" onClick={onClose}>
-      <div
-        className="Welcome-Page-Section"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="login-header">
-          <h2>Welcome Back</h2>
-          <p>Login to your account</p>
-        </div>
-
-        <form className="welcome-page-form" onSubmit={Login}>
+    <div onClick={onClose} style={{ padding: "20px" }}>
+      <div onClick={(e) => e.stopPropagation()}>
+        <form onSubmit={Login} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <input
             type="text"
             placeholder="Username"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
+            required
           />
           <input
             type="password"
             placeholder="Password"
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <button type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
-          {error && <div className="error-message">{error}</div>}
+          {error && <div style={{ color: "red" }}>{error}</div>}
         </form>
-
-        <div className="signup-section">
-          <p>Don't have an account?</p>
-          <button className="signup-btn">Create Account</button>
-        </div>
       </div>
     </div>
   );
