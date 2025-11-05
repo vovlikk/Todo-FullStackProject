@@ -1,17 +1,15 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect,createContext } from "react";
 import api from '../../Connect/Connect';
 import '../DashBoardsCss/UserDashBoard.css';
-import Header from '../../User/UserDashBoardComponents/UserDashBoardHeader';
-import Panel from '../../User/UserDashBoardComponents/UserDashBoardPanel';
-import UserDashBoardPanel from '../../User/UserDashBoardComponents/UserDashBoardPanel'
-
-export const UserContext = createContext(null);
+import UserDashBoardPanel from '../../User/UserDashBoardComponents/UserDashBoardPanel';
+import UserLanding from '../../User/UserLanding/UserLanding'
+export const UserContext = createContext();
 
 function UserDashBoard() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const fetchuser = async () => {
+    const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(`${api}/api/Authentication/getUser`, {
@@ -21,9 +19,7 @@ function UserDashBoard() {
             "ngrok-skip-browser-warning": "true",
           },
         });
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
+        if (!response.ok) throw new Error("Failed to fetch user data");
 
         const data = await response.json();
         setUser(data);
@@ -31,16 +27,14 @@ function UserDashBoard() {
         console.log(error.message);
       }
     };
-    fetchuser();
+    fetchUser();
   }, []);
 
   return (
     <div className="user-dashboard">
-      <Header />
-
       <UserContext.Provider value={user}>
-        <Panel />
-      
+
+      <UserLanding />
       </UserContext.Provider>
     </div>
   );

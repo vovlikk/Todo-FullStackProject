@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../Authentication/AuthenticationCss/Register.css";
-import api from '../Connect/Connect'
+import api from '../Connect/Connect';
 
 function WelcomeRegister({ onClose }) {
   const [regemail, setRegEmail] = useState("");
@@ -29,15 +29,37 @@ function WelcomeRegister({ onClose }) {
     }
 
     try {
-      const response = await fetch(`${api}/api/Authentication/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(info),
-      });
+      const response = await fetch(
+        "https://c12886971e6c.ngrok-free.app/api/Authentication/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+          body: JSON.stringify(info),
+        }
+      );
+
+      console.log("Raw response:", response);
+      console.log("Status:", response.status);
+      console.log("Headers:", [...response.headers]);
+
+      const contentType = response.headers.get("content-type");
 
       if (!response.ok) {
-        const text = await response.text();
-        throw new Error("Fail " + text);
+        if (contentType && contentType.includes("application/json")) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || JSON.stringify(errorData));
+        } else {
+          const text = await response.text();
+          throw new Error(text);
+        }
+      }
+
+      let data = {};
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
       }
 
       alert("Was successful registered");
@@ -45,7 +67,8 @@ function WelcomeRegister({ onClose }) {
       setRegPassword("");
       setRegUserName("");
     } catch (err) {
-      setError("Fail to register " + err.message);
+      console.error("Registration error:", err);
+      setError("Fail to register: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -53,10 +76,7 @@ function WelcomeRegister({ onClose }) {
 
   return (
     <div className="WelcomePageRegisterOverlay" onClick={onClose}>
-      <div
-        className="WelcomePageRegisterSection"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="WelcomePageRegisterSection" onClick={(e) => e.stopPropagation()}>
         <h2>Create Account</h2>
         <form className="register-form" onSubmit={Register}>
           <input

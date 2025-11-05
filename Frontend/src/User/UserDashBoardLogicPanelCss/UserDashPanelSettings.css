@@ -1,4 +1,111 @@
+.user-dash-panel-settings-container {
+    width: 1200px;
+    max-width: 1200px;
+    min-height: 820px;
+    border: 1px solid;
+    margin: 20px auto;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-sizing: border-box;
+    margin: 20px 100px;
+}
 
-.fff h3{
-    color: aqua;
+
+.user-dash-panel-text {
+    font-size: 15px;
+    font-weight: 800;
+    text-align: center;
+}
+
+
+.user-dash-panel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 15px 20px;
+}
+
+.user-dash-panel-info-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-dash-panel-info-section img {
+    width: 30px;
+}
+
+.user-dash-panel-info-section h2,
+.user-dash-panel-info-section h3 {
+    font-size: 18px;
+    margin: 0;
+    color: black;
+}
+
+
+.user-dash-panel-change-info {
+    border: 1px solid;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-sizing: border-box;
+}
+
+
+.user-dash-panel-change-info .user-dash-panel-info-section {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+}
+
+.user-dash-panel-change-info h3 {
+    min-width: 100px; 
+    margin: 0;
+    font-size: 16px;
+    color: black;
+}
+
+.user-dash-panel-change-info input {
+    flex: 1;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 0 10px;
+    font-size: 15px;
+}
+
+
+.user-dash-panel-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.user-dash-panel-buttons button {
+    width: 167px;
+    height: 40px;
+    background: #F24E1E;
+    color: #fff;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.user-dash-panel-buttons button:hover {
+    background: #d94416;
 }

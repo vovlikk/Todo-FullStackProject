@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
 import "../UserDashBoardComponentsCss/UserDashBoardPanel.css";
-import { UserContext } from "../../DashBoards/UserDashBoard/UserDashBoard";
+
 import logout from "../UserDashBoardImg/UserDashPanelImg/Logout.svg";
 import DashBoardPanelSettings from "../UserDashBoardLogicPanel/UserDashPanelSettings";
+import { UserContext } from "../../DashBoards/UserDashBoard/UserDashBoard";
+
+
 
 function UserDashBoardPanel() {
-  const userinfo = useContext(UserContext);
+  const user = useContext(UserContext)
   const [showsection, setShowSection] = useState(null);
 
   return (
@@ -13,8 +16,8 @@ function UserDashBoardPanel() {
       <div className="user-dash-board-panel-container">
         <div className="user-dash-board-panel-section">
           <div className="user-dash-board-panel-info">
-            <h3>{userinfo.userName}</h3>
-            <h2>{userinfo.email}</h2>
+            <h3>{user.userName}</h3>
+            <h2>{user.email}</h2>
           </div>
 
           <div className="user-dash-board-panel-buttons-container">
