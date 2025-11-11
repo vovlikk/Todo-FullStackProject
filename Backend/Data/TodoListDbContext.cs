@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TodoList_Fullstack.Controllers.Authentication;
 using TodoList_Fullstack.Models.Support;
+using TodoList_Fullstack.Models.ToDo;
 
 namespace TodoList_Fullstack.Data
 {
@@ -14,7 +15,8 @@ namespace TodoList_Fullstack.Data
         }
 
         public DbSet<SupportSms> Supports { get; set; }
-
+        public DbSet<ToDoItem> ToDoItems { get; set; }
+    
 
 
     }

@@ -5,6 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using TodoList_Fullstack.Data;
+using TodoList_Fullstack.Interface.Support;
+using TodoList_Fullstack.Interface.ToDo;
+using TodoList_Fullstack.Service.Support;
+using TodoList_Fullstack.Service.ToDo;
 
 internal class Program
 {
@@ -14,6 +18,9 @@ internal class Program
 
         builder.Services.AddDbContext<TodoListDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services.AddScoped<ISupportInterface, SupportService>();
+        builder.Services.AddScoped<IToDoInterface, ToDoService>();
 
         builder.Services.AddIdentity<IdentityUser, IdentityRole>(option =>
         {
