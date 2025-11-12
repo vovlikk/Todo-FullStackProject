@@ -3,7 +3,12 @@ import "../UserDashBoardComponentsCss/UserDashBoardPanel.css";
 
 import logout from "../UserDashBoardImg/UserDashPanelImg/Logout.svg";
 import DashBoardPanelSettings from "../UserDashBoardLogicPanel/UserDashPanelSettings";
+import UserDashPanelAddTask from '../UserDashBoardLogicPanel/UserDashPanelAddTask'
+import DashBordPanelMyTask from '../UserDashBoardLogicPanel/UserDashPanelMyTask'
+import UserDashPanelFAQ from "../UserDashBoardLogicPanel/UserDashPanelFAQ";
 import { UserContext } from "../../DashBoards/UserDashBoard/UserDashBoard";
+import UserCategories from "../UserDashBoardLogicPanel/UserDashPanelCategories"
+import Categories from "../UserDashBoardLogicPanel/UserDashPanelCategories";
 
 
 
@@ -31,16 +36,16 @@ function UserDashBoardPanel() {
             </div>
 
             <div className="user-panel-button">
-              <button>
+              <button onClick={() => setShowSection('add-task')}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2l4 4h-3v6h-2V6H8l4-4zM4 14h16v2H4v-2zm0 4h16v2H4v-2z" />
                 </svg>
-                Vital Task
+                Add Task
               </button>
             </div>
 
             <div className="user-panel-button">
-              <button>
+              <button onClick={() => setShowSection('mytask')}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 14H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2z" />
                 </svg>
@@ -49,7 +54,7 @@ function UserDashBoardPanel() {
             </div>
 
             <div className="user-panel-button">
-              <button>
+              <button onClick={() => setShowSection('categories')}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M3 3h18v2H3V3zm0 14h18v2H3v-2zm0-7h18v2H3V10z" />
                 </svg>
@@ -67,7 +72,7 @@ function UserDashBoardPanel() {
             </div>
 
             <div className="user-panel-button">
-              <button>
+              <button onClick={() => setShowSection("help")}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
                 </svg>
@@ -89,11 +94,11 @@ function UserDashBoardPanel() {
 
       <div className="user-dash-board-content">
         {showsection === "dashboard" && <h1>Dashboard content</h1>}
-        {showsection === "vital" && <h1>Vital Task content</h1>}
-        {showsection === "mytask" && <h1>My Task content</h1>}
-        {showsection === "categories" && <h1>Task Categories content</h1>}
+        {showsection === "add-task" && <UserDashPanelAddTask />}
+        {showsection === "mytask" && <DashBordPanelMyTask/>}
+        {showsection === "categories" && <Categories/>}
         {showsection === "settings" && <DashBoardPanelSettings />}
-        {showsection === "help" && <h1>Help content</h1>}
+        {showsection === "help" && <UserDashPanelFAQ />}
       </div>
     </div>
   );

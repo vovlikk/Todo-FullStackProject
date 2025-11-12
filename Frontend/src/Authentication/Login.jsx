@@ -1,7 +1,8 @@
 import { useState } from "react";
-import jwtDecode from "jwt-decode"; // default import для v3.1.2
+import { jwtDecode } from "jwt-decode"; 
 import { useNavigate } from "react-router-dom";
 import api from "../Connect/Connect";
+import "../Authentication/AuthenticationCss/Login.css"
 
 function WelcomePageLogin({ onClose }) {
   const [userName, setUserName] = useState("");
@@ -15,15 +16,18 @@ function WelcomePageLogin({ onClose }) {
     setError(null);
     setLoading(true);
 
+    
+    const info = { username: userName, password: Password };
+
     try {
-      const response = await fetch(`https://565aae370d52.ngrok-free.app/api/Authentication/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      "ngrok-skip-browser-warning": "true",
-      body: JSON.stringify(info),
-    });
+      const response = await fetch(
+        `${api}/api/Authentication/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(info),
+        }
+      );
 
       if (!response.ok) {
         const text = await response.text();
@@ -59,30 +63,34 @@ function WelcomePageLogin({ onClose }) {
   }
 
   return (
-    <div onClick={onClose} style={{ padding: "20px" }}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <form onSubmit={Login} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <input
-            type="text"
-            placeholder="Username"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={Password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-          {error && <div style={{ color: "red" }}>{error}</div>}
-        </form>
+     <div onClick={onClose} className="Welcome-Page-Login-Overlay">
+    <div onClick={(e) => e.stopPropagation()} className="Welcome-Page-Section">
+      <div className="login-header">
+        <h2>Login</h2>
+        <p>Enter your credentials</p>
       </div>
+      <form onSubmit={Login} className="welcome-page-form">
+        <input
+          type="text"
+          placeholder="Username"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={Password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
+        {error && <div className="error-message">{error}</div>}
+      </form>
     </div>
+  </div>
   );
 }
 

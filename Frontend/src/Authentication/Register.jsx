@@ -30,7 +30,7 @@ function WelcomeRegister({ onClose }) {
 
     try {
       const response = await fetch(
-        "https://c12886971e6c.ngrok-free.app/api/Authentication/register",
+        `${api}/api/Authentication/register`,
         {
           method: "POST",
           headers: {
@@ -41,9 +41,7 @@ function WelcomeRegister({ onClose }) {
         }
       );
 
-      console.log("Raw response:", response);
-      console.log("Status:", response.status);
-      console.log("Headers:", [...response.headers]);
+      
 
       const contentType = response.headers.get("content-type");
 

@@ -1,0 +1,44 @@
+.my-task-container{
+    width: 1300px;
+    max-width: 1300px;
+    min-height: 840px;
+    margin: 20px auto;
+    border-radius: 20px;
+   
+    padding: 20px;
+    display: flex;
+    margin: 20px 100px;
+}
+
+.my-task-sections{
+    width: 1500px;
+    min-height: 600px;
+   
+    border-radius: 20px;
+    
+    padding: 20px;
+    display: flex;
+    
+    gap: 50px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.my-tasks{
+    width: 440px;
+    
+    padding: 20px;
+    height: 770px;
+    border-radius: 20px;
+    border: 1px solid;
+}
+
+.my-task-info{
+    width: 520px;
+   
+    height: 770px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid;
+}
