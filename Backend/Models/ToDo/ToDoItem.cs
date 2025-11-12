@@ -1,10 +1,17 @@
-﻿namespace TodoList_Fullstack.Models.ToDo
+﻿using Microsoft.AspNetCore.Identity;
+using TodoList_Fullstack.Models.CategoryModel;
+
+namespace TodoList_Fullstack.Models.ToDo
 {
     public class ToDoItem
     {
         public int Id { get; set; } 
 
-        public string Category { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
+
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; }
         public string Header { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
@@ -14,7 +21,6 @@
 
         public DateTime Deadline { get; set; }         
         public DateTime? CompletedAt { get; set; }
-
-
+        public IdentityUser User { get; set; }
     }
 }

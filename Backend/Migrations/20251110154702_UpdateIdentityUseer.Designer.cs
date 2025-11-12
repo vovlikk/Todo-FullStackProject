@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoList_Fullstack.Data;
 
@@ -11,9 +12,11 @@ using TodoList_Fullstack.Data;
 namespace TodoList_Fullstack.Migrations
 {
     [DbContext(typeof(TodoListDbContext))]
-    partial class TodoListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251110154702_UpdateIdentityUseer")]
+    partial class UpdateIdentityUseer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,50 +223,6 @@ namespace TodoList_Fullstack.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TodoList_Fullstack.Models.CategoryModel.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryName = "Work"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryName = "Personal"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryName = "Shopping"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryName = "Health"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryName = "Finance"
-                        });
-                });
-
             modelBuilder.Entity("TodoList_Fullstack.Models.Support.SupportSms", b =>
                 {
                     b.Property<int>("Id")
@@ -293,8 +252,9 @@ namespace TodoList_Fullstack.Migrations
                     b.Property<DateTime>("AtCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("datetime2");
@@ -318,8 +278,6 @@ namespace TodoList_Fullstack.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -379,19 +337,11 @@ namespace TodoList_Fullstack.Migrations
 
             modelBuilder.Entity("TodoList_Fullstack.Models.ToDo.ToDoItem", b =>
                 {
-                    b.HasOne("TodoList_Fullstack.Models.CategoryModel.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });

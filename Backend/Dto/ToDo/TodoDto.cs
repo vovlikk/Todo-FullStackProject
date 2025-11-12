@@ -12,11 +12,12 @@ namespace TodoList_Fullstack.Dto.ToDo
         [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(10)]
-        public string Category { get; set; } = string.Empty;
+        
 
         [Required]
         public DateTime Deadline { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
     }
 }

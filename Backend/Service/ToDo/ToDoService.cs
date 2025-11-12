@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TodoList_Fullstack.Data;
 using TodoList_Fullstack.Dto.ToDo;
 using TodoList_Fullstack.Interface.ToDo;
+using TodoList_Fullstack.Models.CategoryModel;
 using TodoList_Fullstack.Models.ToDo;
 
 namespace TodoList_Fullstack.Service.ToDo
@@ -9,24 +12,58 @@ namespace TodoList_Fullstack.Service.ToDo
     public class ToDoService : IToDoInterface
     {
         private readonly TodoListDbContext _todoListDbContext;
-        public ToDoService(TodoListDbContext todoListDbContext)
+        private readonly UserManager<IdentityUser> _userManager;
+        public ToDoService(TodoListDbContext todoListDbContext, UserManager<IdentityUser> userManager)
         {
             _todoListDbContext = todoListDbContext;
+            _userManager = userManager;
         }
 
-        public async Task<IEnumerable<string>> Category()
+        public async Task<bool> AddNewCategory(string name)
         {
-            var category = await _todoListDbContext.ToDoItems
-                .Select(x => x.Header)
-                .ToListAsync();
+            var foundCategory = await _todoListDbContext.Categories.FirstOrDefaultAsync(x => x.CategoryName == name);
+            if (foundCategory != null)
+            {
+                return false;
+            }
 
+            var category = new Category
+            {
+                CategoryName = name
+            };
+
+            _todoListDbContext.Categories.Add(category);
+            await _todoListDbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<Category>> Category()
+        {
+            var category = await _todoListDbContext.Categories.ToListAsync();
+              
             return category;
         }
 
-        public async Task<bool> CreateToDoItem(TodoDto todoDto)
+        public async Task<bool> CreateToDoItem(TodoDto todoDto, ClaimsPrincipal currentUser, int categoryid)
         {
-            if(todoDto.Header.Length > 30 || todoDto.Description.Length > 500)
+            Console.WriteLine($"Header: {todoDto.Header}, Desc: {todoDto.Description}, CatId: {categoryid}, Deadline: {todoDto.Deadline}");
+
+            var user = await _userManager.GetUserAsync(currentUser);
+            if (user == null)
             {
+                Console.WriteLine("User is null");
+                return false;
+            }
+
+            if (categoryid <= 0)
+            {
+                Console.WriteLine("CategoryId invalid");
+                return false;
+            }
+
+            if (todoDto.Header.Length > 30 || todoDto.Description.Length > 500)
+            {
+                Console.WriteLine("Header or Description too long");
                 return false;
             }
 
@@ -37,14 +74,15 @@ namespace TodoList_Fullstack.Service.ToDo
                 IsCompleted = false,
                 AtCreated = DateTime.UtcNow,
                 Deadline = todoDto.Deadline,
-
-
+                UserId = user.Id,
+                CategoryId = categoryid
             };
 
             _todoListDbContext.ToDoItems.Add(item);
             await _todoListDbContext.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<bool> DeleteTask(int id)
         {
