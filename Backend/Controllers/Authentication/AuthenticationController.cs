@@ -85,11 +85,6 @@ namespace TodoList_Fullstack.Controllers.Authentication
                     signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
                 );
 
-
-
-
-               
-
                 return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
             }
             return Unauthorized(new { message = "Invalid username or password" });
