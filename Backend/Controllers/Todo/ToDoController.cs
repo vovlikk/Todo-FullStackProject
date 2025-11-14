@@ -5,7 +5,7 @@ using TodoList_Fullstack.Dto.CategoryDto;
 using TodoList_Fullstack.Dto.ToDo;
 using TodoList_Fullstack.Interface.ToDo;
 
-namespace TodoList_Fullstack.Controllers
+namespace TodoList_Fullstack.Controllers.Todo
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -64,25 +64,8 @@ namespace TodoList_Fullstack.Controllers
             return Ok(items);
         }
 
-        [HttpPost("add-category")]
-        public async Task<IActionResult> AddNewCategory([FromBody] CategoryDto categoryDto)
-        {
-            var result = await _toDoInterface.AddNewCategory(categoryDto.CategoryName);
-            if (result)
-            {
-                return Ok(new { Message = "Category added successfully." });
-            }
-            else
-            {
-                return BadRequest(new { Message = "Failed to add category." });
-            }
-        }
+       
 
-        [HttpGet("all-categories")]
-        public async Task<IActionResult> GetAllCategories()
-        {
-            var categories = await _toDoInterface.Category();
-            return Ok(categories);
-        }
+        
     }
 }

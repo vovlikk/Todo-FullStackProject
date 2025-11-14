@@ -12,12 +12,10 @@ namespace TodoList_Fullstack.Interface.ToDo
         Task<bool> DeleteTask(int id);
 
         Task<bool> MarkTaskAsCompleted(int id);
-        Task<IEnumerable<Category>> Category(); 
-
+        
         Task<IEnumerable<ToDoItem>> GetAllToDoItems();
 
-        Task<bool> AddNewCategory(string name);
-
+       
 
     }
 }

@@ -19,34 +19,9 @@ namespace TodoList_Fullstack.Service.ToDo
             _userManager = userManager;
         }
 
-        public async Task<bool> AddNewCategory(string name)
-        {
-            var foundCategory = await _todoListDbContext.Categories.FirstOrDefaultAsync(x => x.CategoryName == name);
-            if (foundCategory != null)
-            {
-                return false;
-            }
-
-            var category = new Category
-            {
-                CategoryName = name
-            };
-
-            _todoListDbContext.Categories.Add(category);
-            await _todoListDbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<IEnumerable<Category>> Category()
-        {
-            var category = await _todoListDbContext.Categories.ToListAsync();
-              
-            return category;
-        }
-
         public async Task<bool> CreateToDoItem(TodoDto todoDto, ClaimsPrincipal currentUser, int categoryid)
         {
-            Console.WriteLine($"Header: {todoDto.Header}, Desc: {todoDto.Description}, CatId: {categoryid}, Deadline: {todoDto.Deadline}");
+            
 
             var user = await _userManager.GetUserAsync(currentUser);
             if (user == null)
