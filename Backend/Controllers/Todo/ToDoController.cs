@@ -29,10 +29,11 @@ namespace TodoList_Fullstack.Controllers.Todo
             return BadRequest(new { Message = "Failed to create To-Do item." });
         }
 
-        [HttpDelete("delete-task")]
+        [HttpDelete("delete-task/{id}")]
         public async Task<IActionResult> DeleteTask([FromRoute] int id)
         {
-            var result = await _toDoInterface.DeleteTask(id);
+            var user = User;
+            var result = await _toDoInterface.DeleteTask(user, id);
             if (result)
             {
                 return Ok(new { Message = "To-Do item deleted successfully." });
@@ -43,10 +44,11 @@ namespace TodoList_Fullstack.Controllers.Todo
             }
         }
 
-        [HttpPut("mark-task-completed")]
+        [HttpPut("mark-task-completed/{id}")]
         public async Task<IActionResult> MarkTaskAsCompleted([FromRoute] int id)
         {
-            var result = await _toDoInterface.MarkTaskAsCompleted(id);
+            var user = User;
+            var result = await _toDoInterface.MarkTaskAsCompleted(user,id);
             if (result)
             {
                 return Ok(new { Message = "To-Do item marked as completed successfully." });
@@ -57,15 +59,12 @@ namespace TodoList_Fullstack.Controllers.Todo
             }
         }
 
-        [HttpGet("all-task")]
-        public async Task<IActionResult> GetAllToDoItems()
+        [HttpGet("get-all-user-todo-items")]
+        public async Task<IActionResult> GetAllUserToDoItems()
         {
-            var items = await _toDoInterface.GetAllToDoItems();
-            return Ok(items);
+            var user = User;
+            var result = await _toDoInterface.GetAllUserToDoItems(user);
+            return Ok(result);
         }
-
-       
-
-        
     }
 }

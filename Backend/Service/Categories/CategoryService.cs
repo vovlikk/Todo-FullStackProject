@@ -29,11 +29,8 @@ namespace TodoList_Fullstack.Service.Categories
                     Id = c.Id,
                     CategoryName = c.CategoryName,
                     UserId = c.UserId
-                })
-                .ToListAsync();
-
-                    return categories;
-
+                }).ToListAsync();
+                return categories;
         }
 
         // Add New Category
