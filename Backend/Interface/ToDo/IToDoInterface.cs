@@ -9,15 +9,12 @@ namespace TodoList_Fullstack.Interface.ToDo
     public interface IToDoInterface
     {
         Task<bool> CreateToDoItem(TodoDto todoDto, ClaimsPrincipal currentUser,int id);
-        Task<bool> DeleteTask(int id);
+        Task<bool> DeleteTask(ClaimsPrincipal currentUser, int id);
 
-        Task<bool> MarkTaskAsCompleted(int id);
-        Task<IEnumerable<Category>> Category(); 
+        Task<bool> MarkTaskAsCompleted(ClaimsPrincipal currentUser, int id);
 
-        Task<IEnumerable<ToDoItem>> GetAllToDoItems();
+        Task<IEnumerable<TodoDto>> GetAllUserToDoItems(ClaimsPrincipal currentUser);
 
-        Task<bool> AddNewCategory(string name);
-
-
+        
     }
 }

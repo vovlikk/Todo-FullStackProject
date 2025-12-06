@@ -19,34 +19,9 @@ namespace TodoList_Fullstack.Service.ToDo
             _userManager = userManager;
         }
 
-        public async Task<bool> AddNewCategory(string name)
-        {
-            var foundCategory = await _todoListDbContext.Categories.FirstOrDefaultAsync(x => x.CategoryName == name);
-            if (foundCategory != null)
-            {
-                return false;
-            }
-
-            var category = new Category
-            {
-                CategoryName = name
-            };
-
-            _todoListDbContext.Categories.Add(category);
-            await _todoListDbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<IEnumerable<Category>> Category()
-        {
-            var category = await _todoListDbContext.Categories.ToListAsync();
-              
-            return category;
-        }
-
         public async Task<bool> CreateToDoItem(TodoDto todoDto, ClaimsPrincipal currentUser, int categoryid)
         {
-            Console.WriteLine($"Header: {todoDto.Header}, Desc: {todoDto.Description}, CatId: {categoryid}, Deadline: {todoDto.Deadline}");
+            
 
             var user = await _userManager.GetUserAsync(currentUser);
             if (user == null)
@@ -84,9 +59,11 @@ namespace TodoList_Fullstack.Service.ToDo
         }
 
 
-        public async Task<bool> DeleteTask(int id)
+        public async Task<bool> DeleteTask(ClaimsPrincipal currentUser, int id)
         {
-            var findToDoItem = await _todoListDbContext.ToDoItems.FirstOrDefaultAsync(x => x.Id == id);
+
+            var user = await _userManager.GetUserAsync(currentUser);
+            var findToDoItem = await _todoListDbContext.ToDoItems.Where(u => u.UserId == user.Id).FirstOrDefaultAsync(x => x.Id == id);
             
             if(findToDoItem == null)
             {
@@ -98,23 +75,48 @@ namespace TodoList_Fullstack.Service.ToDo
             return true;
         }
 
-        public async Task<IEnumerable<ToDoItem>> GetAllToDoItems()
+        public Task<bool> FoundTask(ClaimsPrincipal currendUser, string nameoftask)
         {
-            
-            return await _todoListDbContext.ToDoItems.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> MarkTaskAsCompleted(int id)
+        public async Task<IEnumerable<TodoDto>> GetAllUserToDoItems(ClaimsPrincipal currentUser)
         {
-            var findToDoItem = await _todoListDbContext.ToDoItems.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _userManager.GetUserAsync(currentUser);
+
+            var todoItems = await _todoListDbContext.ToDoItems
+                .Where(t => t.UserId == user.Id).Select(t => new TodoDto
+                {
+                    Id = t.Id,
+                    Header = t.Header,
+                    Description = t.Description,
+                    IsCompleted = t.IsCompleted,
+                    AtCreated = t.AtCreated,
+                    Deadline = t.Deadline,
+                    CategoryId = t.CategoryId
+                })
+                .ToListAsync();
+
+            return todoItems;
+        }
+
+        
+
+        public async Task<bool> MarkTaskAsCompleted(ClaimsPrincipal currentUser, int id)
+        {
+            var user = await _userManager.GetUserAsync(currentUser);
+            var findToDoItem = await _todoListDbContext.ToDoItems.Where(x => x.UserId == user.Id).FirstOrDefaultAsync(t => t.Id == id);
             if (findToDoItem == null)
             {
                 return false;
             }
+
             findToDoItem.IsCompleted = true;
-            _todoListDbContext.ToDoItems.Update(findToDoItem);
             await _todoListDbContext.SaveChangesAsync();
             return true;
         }
+
+        
     }
 }
+

@@ -5,7 +5,7 @@ using TodoList_Fullstack.Dto.CategoryDto;
 using TodoList_Fullstack.Dto.ToDo;
 using TodoList_Fullstack.Interface.ToDo;
 
-namespace TodoList_Fullstack.Controllers
+namespace TodoList_Fullstack.Controllers.Todo
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -29,10 +29,11 @@ namespace TodoList_Fullstack.Controllers
             return BadRequest(new { Message = "Failed to create To-Do item." });
         }
 
-        [HttpDelete("delete-task")]
+        [HttpDelete("delete-task/{id}")]
         public async Task<IActionResult> DeleteTask([FromRoute] int id)
         {
-            var result = await _toDoInterface.DeleteTask(id);
+            var user = User;
+            var result = await _toDoInterface.DeleteTask(user, id);
             if (result)
             {
                 return Ok(new { Message = "To-Do item deleted successfully." });
@@ -43,10 +44,11 @@ namespace TodoList_Fullstack.Controllers
             }
         }
 
-        [HttpPut("mark-task-completed")]
+        [HttpPut("mark-task-completed/{id}")]
         public async Task<IActionResult> MarkTaskAsCompleted([FromRoute] int id)
         {
-            var result = await _toDoInterface.MarkTaskAsCompleted(id);
+            var user = User;
+            var result = await _toDoInterface.MarkTaskAsCompleted(user,id);
             if (result)
             {
                 return Ok(new { Message = "To-Do item marked as completed successfully." });
@@ -57,32 +59,12 @@ namespace TodoList_Fullstack.Controllers
             }
         }
 
-        [HttpGet("all-task")]
-        public async Task<IActionResult> GetAllToDoItems()
+        [HttpGet("get-all-user-todo-items")]
+        public async Task<IActionResult> GetAllUserToDoItems()
         {
-            var items = await _toDoInterface.GetAllToDoItems();
-            return Ok(items);
-        }
-
-        [HttpPost("add-category")]
-        public async Task<IActionResult> AddNewCategory([FromBody] CategoryDto categoryDto)
-        {
-            var result = await _toDoInterface.AddNewCategory(categoryDto.CategoryName);
-            if (result)
-            {
-                return Ok(new { Message = "Category added successfully." });
-            }
-            else
-            {
-                return BadRequest(new { Message = "Failed to add category." });
-            }
-        }
-
-        [HttpGet("all-categories")]
-        public async Task<IActionResult> GetAllCategories()
-        {
-            var categories = await _toDoInterface.Category();
-            return Ok(categories);
+            var user = User;
+            var result = await _toDoInterface.GetAllUserToDoItems(user);
+            return Ok(result);
         }
     }
 }
