@@ -1,44 +1,135 @@
 .my-task-container{
-    width: 1300px;
-    max-width: 1300px;
-    min-height: 840px;
+    width: 1500px;
+    max-width: 1500px;
+    height: 720px;
     margin: 20px auto;
     border-radius: 20px;
-   
     padding: 20px;
     display: flex;
-    margin: 20px 100px;
 }
 
 .my-task-sections{
-    width: 1500px;
-    min-height: 600px;
-   
+    width: 100%;
+    min-height: 500px;
     border-radius: 20px;
-    
     padding: 20px;
     display: flex;
-    
     gap: 50px;
-    display: flex;
     justify-content: center;
-    
 }
 
 .my-tasks{
-    width: 440px;
-    
-    padding: 20px;
-    height: 770px;
+    width: 1200px;
+    padding: 25px;
+    height: 820px;
     border-radius: 20px;
-    border: 1px solid;
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
 }
 
-.my-task-info{
-    width: 520px;
-   
-    height: 770px;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid;
+.my-tasks-header {
+    flex: 1;
+    max-height: 750px;
+    overflow-y: auto;
+    padding-right: 10px;
+    scroll-behavior: smooth;
+}
+
+.my-tasks-header ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    padding: 0;
+}
+
+.my-tasks-header ul li {
+    padding: 18px;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    transition: all 0.25s ease;
+    cursor: pointer;
+    list-style: none;
+}
+
+.my-tasks-header ul li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    background-color: #f3f6ff;
+}
+
+
+.my-tasks-header ul li strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.my-tasks-header ul li p {
+    font-size: 14px;
+    color: #555;
+}
+
+
+.my-tasks-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.my-tasks-buttons button {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    transition: 0.25s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.my-tasks-buttons button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.my-tasks-buttons button:active {
+    transform: scale(0.97);
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #5b8cff;
+    color: white;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.pagination button:hover:enabled {
+    background-color: #4a76e2;
+}
+ы
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    font-weight: 600;
 }
