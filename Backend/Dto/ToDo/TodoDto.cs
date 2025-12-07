@@ -4,7 +4,7 @@ namespace TodoList_Fullstack.Dto.ToDo
 {
     public class TodoDto
     {
-
+        
         public int Id { get; set; }
 
         [Required]
@@ -18,6 +18,8 @@ namespace TodoList_Fullstack.Dto.ToDo
         public DateTime AtCreated { get; set; } = DateTime.UtcNow;
 
         public bool IsCompleted { get; set; } = false;
+
+        public DateTime? CompletedAt { get; set; }
 
 
         [Required]

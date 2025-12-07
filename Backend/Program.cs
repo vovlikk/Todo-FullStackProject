@@ -6,9 +6,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using TodoList_Fullstack.Data;
 using TodoList_Fullstack.Interface.Category;
+using TodoList_Fullstack.Interface.Notification;
 using TodoList_Fullstack.Interface.Support;
 using TodoList_Fullstack.Interface.ToDo;
 using TodoList_Fullstack.Service.Categories;
+using TodoList_Fullstack.Service.Notification;
 using TodoList_Fullstack.Service.Support;
 using TodoList_Fullstack.Service.ToDo;
 
@@ -24,6 +26,7 @@ internal class Program
         builder.Services.AddScoped<ISupportInterface, SupportService>();
         builder.Services.AddScoped<IToDoInterface, ToDoService>();
         builder.Services.AddScoped<ICategoryInterface, CategoryService>();
+        builder.Services.AddScoped<INotificInterface, NotificationService>();
 
         builder.Services.AddIdentity<IdentityUser, IdentityRole>(option =>
         {
