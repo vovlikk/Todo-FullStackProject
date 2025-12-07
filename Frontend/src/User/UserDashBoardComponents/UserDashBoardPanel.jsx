@@ -9,12 +9,19 @@ import UserDashPanelFAQ from "../UserDashBoardLogicPanel/UserDashPanelFAQ";
 import { UserContext } from "../../DashBoards/UserDashBoard/UserDashBoard";
 import UserCategories from "../UserDashBoardLogicPanel/UserDashPanelCategories"
 import Categories from "../UserDashBoardLogicPanel/UserDashPanelCategories";
+import UserDashBoard from "../UserDashBoardLogicPanel/UserDashPanelDashBoard";
 
 
 
 function UserDashBoardPanel() {
   const user = useContext(UserContext)
   const [showsection, setShowSection] = useState(null);
+
+  function handleLogout () {
+    localStorage.removeItem('token')
+
+     window.location.replace("/"); 
+  }
 
   return (
     <div className="user-dash-board-wrapper">
@@ -27,7 +34,7 @@ function UserDashBoardPanel() {
 
           <div className="user-dash-board-panel-buttons-container">
             <div className="user-panel-button">
-              <button>
+              <button onClick={() => setShowSection('dash-board')}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
                 </svg>
@@ -82,7 +89,7 @@ function UserDashBoardPanel() {
           </div>
 
           <div className="user-panel-button-exit">
-            <button>
+            <button onClick={handleLogout}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M16 13v-2H7V9l-5 3 5 3v-2h9zM19 3h-8v2h8v14h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
               </svg>
@@ -93,7 +100,7 @@ function UserDashBoardPanel() {
       </div>
 
       <div className="user-dash-board-content">
-        {showsection === "dashboard" && <h1>Dashboard content</h1>}
+        {showsection === "dash-board" && <UserDashBoard/>}
         {showsection === "add-task" && <UserDashPanelAddTask />}
         {showsection === "mytask" && <DashBordPanelMyTask/>}
         {showsection === "categories" && <Categories/>}

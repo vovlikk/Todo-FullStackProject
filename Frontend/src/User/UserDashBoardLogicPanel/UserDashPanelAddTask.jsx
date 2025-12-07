@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../UserDashBoardLogicPanelCss/UserDashPanelAddTask.css";
 import api from "../../Connect/Connect";
 
@@ -7,19 +7,48 @@ function AddTask() {
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [userCategory, setUserCategory] = useState([]);
 
-  const categories = [
-    { id: 1, name: "Work" },
-    { id: 2, name: "Personal" },
-    { id: 3, name: "Shopping" },
-    { id: 4, name: "Health" },
-    { id: 5, name: "Finance" },
-  ];
+  // Получение категорий пользователя
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      setError(null);
 
-  async function Add(e) {
+      try {
+        const token = localStorage.getItem("token"); // было localStorage('token') - ошибка
+        if (!token) throw new Error("Пользователь не авторизован!");
+
+        const response = await fetch(`${api}/api/Category/get-user-category`, {
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+            "Authorization": `Bearer ${token}`, // было "Authrorize" - ошибка
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Ошибка ${response.status}`);
+        }
+
+        const data = await response.json();
+        setUserCategory(data);
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Добавление новой задачи
+  const handleAddTask = async (e) => {
     e.preventDefault();
 
-    
     if (!header || !description || !categoryId || !deadline) {
       alert("Заполните все поля!");
       return;
@@ -29,11 +58,10 @@ function AddTask() {
       header,
       description,
       categoryId: Number(categoryId),
-      deadline 
+      deadline,
     };
 
     try {
-     
       const token = localStorage.getItem("token");
       if (!token) {
         alert("Пользователь не авторизован!");
@@ -42,9 +70,10 @@ function AddTask() {
 
       const response = await fetch(`${api}/api/todo/create-todo-item`, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` 
+          "ngrok-skip-browser-warning": "true",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(info),
       });
@@ -63,10 +92,10 @@ function AddTask() {
       console.error("Ошибка запроса:", error);
       alert("Сервер недоступен!");
     }
-  }
+  };
 
   return (
-    <form className="add-task-container" onSubmit={Add}>
+    <form className="add-task-container" onSubmit={handleAddTask}>
       <div className="add-task-field add-task-header">
         <label htmlFor="header">Title</label>
         <input
@@ -112,9 +141,9 @@ function AddTask() {
           required
         >
           <option value="">Select category</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id.toString()}>
-              {cat.name}
+          {userCategory.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.categoryName}
             </option>
           ))}
         </select>
@@ -125,6 +154,9 @@ function AddTask() {
           Add Task
         </button>
       </div>
+
+      {loading && <p>Loading categories...</p>}
+      {error && <p className="error-text">{error}</p>}
     </form>
   );
 }
