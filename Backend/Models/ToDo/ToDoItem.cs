@@ -16,6 +16,9 @@ namespace TodoList_Fullstack.Models.ToDo
         public string Description { get; set; } = string.Empty;
           
         public bool IsCompleted { get; set; } = false;
+        public bool IsStarted { get; set; } = false;
+
+
 
         public DateTime AtCreated { get; set; } = DateTime.UtcNow;
 

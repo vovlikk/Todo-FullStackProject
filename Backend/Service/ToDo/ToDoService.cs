@@ -75,9 +75,40 @@ namespace TodoList_Fullstack.Service.ToDo
             return true;
         }
 
-        public Task<bool> FoundTask(ClaimsPrincipal currendUser, string nameoftask)
+        public async Task<bool> FoundTask(ClaimsPrincipal currendUser, string nameoftask)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.GetUserAsync(currendUser);
+
+            var foundtask = await _todoListDbContext.ToDoItems.Where(u => u.UserId == user.Id).FirstOrDefaultAsync(t => t.Header == nameoftask);
+
+            if(foundtask == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async  Task<IEnumerable<TodoDto>> GetAllCompletedToDoItems(ClaimsPrincipal currentUser)
+        {
+            var user = await _userManager.GetUserAsync(currentUser);
+            var bim = true;
+
+            var todoitem =await _todoListDbContext.ToDoItems.Where(t => t.UserId == user.Id && t.IsCompleted == bim)
+                .Select(t => new TodoDto
+                {
+                    Id = t.Id,
+                    Header = t.Header,
+                    Description = t.Description,
+                    IsCompleted = t.IsCompleted,
+                    AtCreated = t.AtCreated,
+                    Deadline = t.Deadline,
+                    CategoryId = t.CategoryId,
+                    CompletedAt = t.CompletedAt
+
+                }).ToListAsync();
+
+            return todoitem;
         }
 
         public async Task<IEnumerable<TodoDto>> GetAllUserToDoItems(ClaimsPrincipal currentUser)
@@ -112,11 +143,50 @@ namespace TodoList_Fullstack.Service.ToDo
             }
 
             findToDoItem.IsCompleted = true;
+            findToDoItem.CompletedAt = DateTime.Now;
+
             await _todoListDbContext.SaveChangesAsync();
             return true;
         }
 
-        
+        public async Task<bool> MarkTaskStart(ClaimsPrincipal currentUser, int id)
+        {
+            var user =await _userManager.GetUserAsync(currentUser);
+            var foundtask = await _todoListDbContext.ToDoItems.Where(x => x.UserId == user.Id).FirstOrDefaultAsync(t => t.Id == id);
+
+            if (foundtask == null)
+            {
+                return false;
+            }
+
+            foundtask.IsStarted = true;
+
+            await _todoListDbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<TodoDto>> RecentlyCreatedTask(ClaimsPrincipal currentUser)
+        {
+            var user = await _userManager.GetUserAsync(currentUser);
+            var weekAgo = DateTime.UtcNow.AddDays(-7);
+            var recenttask = await _todoListDbContext.ToDoItems.Where(u => u.UserId == user.Id).Where(t => t.AtCreated >= weekAgo).Select(t => new TodoDto
+            {
+                Header = t.Header,
+                Description = t.Description,
+                AtCreated = t.AtCreated,
+                Deadline = t.Deadline,
+                CategoryId = t.CategoryId,
+                Id = t.Id,
+                IsCompleted = t.IsCompleted,
+                CompletedAt = t.CompletedAt
+
+            }).ToListAsync();
+
+            return recenttask;
+
+
+
+        }
     }
 }
 
