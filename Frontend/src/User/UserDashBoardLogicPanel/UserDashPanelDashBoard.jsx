@@ -9,6 +9,7 @@ import femfriend from '../UserDashBoardImg/UserDashBoard/femfriend.png';
 import invite from "../UserDashBoardImg/UserDashBoard/invite.png";
 import book from "../UserDashBoardImg/UserDashBoard/Book.png";
 import { UserContext } from "../../DashBoards/UserDashBoard/UserDashBoard";
+import todorecentlyimg from "../UserDashBoardImg/UserDashBoard/todo-recently.png"
 
 function UserDashBoard() {
     const user = useContext(UserContext);
@@ -26,7 +27,7 @@ function UserDashBoard() {
 
     
     const [recentPage, setRecentPage] = useState(1);
-    const recentItemsPerPage = 5;
+    const recentItemsPerPage = 4;
     const recentTotalPages = Math.ceil(recentlyTask.length / recentItemsPerPage);
     const recentStart = (recentPage - 1) * recentItemsPerPage;
     const recentToShow = recentlyTask.slice(recentStart, recentStart + recentItemsPerPage);
@@ -111,7 +112,10 @@ function UserDashBoard() {
                 
                 <div className='dash-board-first-group'>
                     <div className='dash-board-info'>
-                        <h3>Last Created Task</h3>
+                        <div className='dash-board-info-header'>
+                            <img src={todorecentlyimg} alt="" />
+                            <h3>Last Created Task</h3>
+                        </div>
                         <div className='recent-tasks-list'>
                             {loading && <p>Loading tasks...</p>}
                             {error && <p className="error-text">{error}</p>}
@@ -122,7 +126,12 @@ function UserDashBoard() {
                                 return (
                                     <div key={task.id} className='recent-task-card'>
                                         <div className='recent-task-header'>{task.header}</div>
-                                        <div className='recent-task-desc'>{task.description}</div>
+                                        <div className='recent-task-desc'>
+                                            {task.description.length > 100 
+                                                ? task.description.slice(0, 100) + "..." 
+                                                : task.description
+                                            }
+                                        </div>
                                         <div className='recent-task-date'>
                                             Created: {days === 0 ? "Today" : `${days} day${days > 1 ? "s" : ""} ago`}
                                         </div>
@@ -133,7 +142,7 @@ function UserDashBoard() {
                            
                            
                             {recentlyTask.length > recentItemsPerPage && (
-                                <div className="pagination">
+                                <div className="pagination-completed">
                                     <button disabled={recentPage === 1} onClick={() => setRecentPage(prev => prev - 1)}>Prev</button>
                                     <span>{recentPage} / {recentTotalPages}</span>
                                     <button disabled={recentPage === recentTotalPages} onClick={() => setRecentPage(prev => prev + 1)}>Next</button>
@@ -146,7 +155,7 @@ function UserDashBoard() {
                 
                 <div className='dash-board-second-group'>
                     <div className='dash-board-status'>
-                        <h3>Completed Tasks</h3>
+                        <h3>statistika</h3>
                     </div>
                     <div className='dash-board-completed'>
                         <div className='dash-board-completed-header'>
@@ -161,7 +170,12 @@ function UserDashBoard() {
                                 return (
                                     <div key={task.id} className="completed-task-item">
                                         <div className="completed-task-header"><strong>{task.header}</strong></div>
-                                        <p className="completed-task-desc">{task.description}</p>
+                                        <p className="completed-task-desc">
+                                            {task.description.length > 60
+                                                ? task.description.slice(0, 60) + "..." 
+                                                : task.description
+                                            }
+                                        </p>
                                         <div className="completed-task-date">
                                             Completed: {days === 0 ? "Today" : `${days} day${days > 1 ? "s" : ""} ago`}
                                         </div>
@@ -171,7 +185,7 @@ function UserDashBoard() {
 
                             
                             {completedTask.length > completedItemsPerPage && (
-                                <div className="pagination">
+                                <div className="pagination-recent">
                                     <button disabled={completedPage === 1} onClick={() => setCompletedPage(prev => prev - 1)}>Prev</button>
                                     <span>{completedPage} / {completedTotalPages}</span>
                                     <button disabled={completedPage === completedTotalPages} onClick={() => setCompletedPage(prev => prev + 1)}>Next</button>

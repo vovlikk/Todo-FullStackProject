@@ -133,3 +133,8 @@
 .pagination span {
     font-weight: 600;
 }
+
+
+.my-tasks-header-name h3{
+    color: black;
+}

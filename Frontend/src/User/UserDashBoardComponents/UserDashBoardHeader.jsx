@@ -6,7 +6,7 @@ import notification from '../../User/UserDashBoardImg/notification.png';
 import api from '../../Connect/Connect'
 
 function UserDashBoardHeader() {
-    const [text, setText] = useState('');
+    const [founditem, setFoundItem] = useState('');
     const [time, setTime] = useState(new Date());
     const [error, setError] = useState(null);
     const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -22,6 +22,8 @@ function UserDashBoardHeader() {
         e.preventDefault();
         setOpenCalendar(!openCalendar); 
     }
+
+    
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -82,21 +84,27 @@ function UserDashBoardHeader() {
     return () => document.removeEventListener('mousedown', handleClickOutsideCalendar);
 }, []);
 
-    async function FoundTask(e) {
+        async function FoundTask(e) {
         e.preventDefault();
+        setError(null);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`api/ff/${text}`, {
+            const response = await fetch(`${api}/api/ToDo/found-task`, {
+                method: "POST",
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
-                }
+                },
+                body: JSON.stringify({ text: founditem })
             });
 
             if (!response.ok) {
                 const text = await response.text();
-                throw new Error(text.message || response.status);
+                throw new Error(text || response.status);
             }
+
+            const data = await response.json();
+            console.log("Found tasks:", data);
         } catch (err) {
             setError(err.message);
         }
@@ -116,9 +124,9 @@ function UserDashBoardHeader() {
                         <div className="input-user-header">
                             <input
                                 type="text"
-                                value={text}
+                                value={founditem}
                                 placeholder='Enter your task here...'
-                                onChange={(e) => setText(e.target.value)}
+                                onChange={(e) => setFoundItem(e.target.value)}
                             />
                             <button type="submit">
                                 <img src={search} alt="search" />

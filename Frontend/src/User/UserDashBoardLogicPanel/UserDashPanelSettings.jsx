@@ -8,6 +8,39 @@ import userimg from '../UserDashBoardImg/UserDashBoardSettingsImg/user.png';
 
 function DashBoardPanelSettings() {
   const api = useContext(UserContext);
+  const[telefon,setTelefon] = useState('');
+  const[email,setEmail] = useState('')
+  const[username,setUserName] = useState('');
+  const[error,setError] = useState(null);
+  
+  async function ChangeNumber(){
+    try{
+      const token = localStorage.getItem('token');
+      const response = await fetch(``,{
+        method:"PUT",
+        headers:{
+          "Content-Type":"application/json",
+          "ngrok-skip-browser-warning": "true",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({number:telefon})
+      })
+
+      if(!response.ok){
+        const error = await response.text();
+        alert("Ошибка" + error);
+        return;
+      }
+      
+    }
+    catch(err){
+      setError(`Error + ${err.message}`)
+    }
+  }
+
+
+
+
  
   return (
     <div className="user-dash-panel-settings-container">
@@ -34,9 +67,8 @@ function DashBoardPanelSettings() {
       </div>
 
       <div className="user-dash-panel-change-info">
-        <div className="user-dash-panel-info-section">
-          <h3>Name</h3>
-          <input type="text" />
+        <div className='user-dash-panel-change-info-header'>
+          <h1>Change Your Information</h1>
         </div>
         <div className="user-dash-panel-info-section">
           <h3>Name</h3>

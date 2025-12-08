@@ -17,6 +17,10 @@
     
 }
 
+.pagination-completed-items{
+    padding-bottom: 10px;
+}
+
 .dash-board-left-side h1{
     font-size: 45px;
     font-weight: 400;
@@ -100,7 +104,19 @@
     display: flex;
     gap: 10px;
     color: #FF6767;
-    font-size: 15px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding-left: 10px;
+}
+.dash-board-completed-header h3{
+    color: #FF6767;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.dash-board-status h3{
+    font-size: 10px;
+    color: #222;
 }
 
 
@@ -150,14 +166,25 @@
   padding: 20px 0;
 }
 
+.dash-board-info-header{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 
 .dash-board-info h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #333;
+    color: #FF6767;
+    font-weight: 400;
+    
 }
 .dash-board-info{
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .recent-tasks-list {
@@ -201,4 +228,56 @@
 .no-tasks {
     color: #aaa;
     font-style: italic;
+}
+
+
+
+.pagination-recent{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    
+}
+.pagination-completed {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.pagination-recent button,
+.pagination-completed button {
+    padding: 8px 14px;
+    border: 1px solid #FF6767;
+    border-radius: 6px;
+    background-color: white;
+    color: #FF6767;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-recent button:hover,
+.pagination-completed button:hover {
+    background-color: #FF6767;
+    color: white;
+}
+
+
+.pagination-recent button.active-page,
+.pagination-completed button.active-page {
+    background-color: #FF6767;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #FF6767;
+}
+
+
+.pagination-recent span,
+.pagination-completed span {
+    font-weight: 500;
+    color: #FF6767;
 }

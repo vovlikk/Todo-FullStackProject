@@ -1,7 +1,7 @@
 import { useState, useEffect,createContext } from "react";
 import api from '../../Connect/Connect';
 import '../DashBoardsCss/UserDashBoard.css';
-import UserDashBoardPanel from '../../User/UserDashBoardComponents/UserDashBoardPanel';
+import UserDashBoardPanel from "../../User/UserDashBoardLogicPanel/UserDashPanelDashBoard";
 import UserLanding from '../../User/UserLanding/UserLanding'
 export const UserContext = createContext();
 
@@ -33,7 +33,7 @@ function UserDashBoard() {
   return (
     <div className="user-dashboard">
       <UserContext.Provider value={user}>
-
+      
       <UserLanding />
       </UserContext.Provider>
     </div>
