@@ -52,7 +52,8 @@
 }
 
 .user-dash-panel-info-section h2,
-.user-dash-panel-info-section h3 {
+.user-dash-panel-info-section h3,
+.user-dash-panel-info-section h1 {
     font-size: 18px;
     margin: 0;
     color: black;

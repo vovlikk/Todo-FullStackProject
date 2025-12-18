@@ -3,33 +3,33 @@ import { useState, useEffect } from 'react';
 import search from '../../User/UserDashBoardImg/Search.png';
 import calendar from '../../User/UserDashBoardImg/calendar.png';
 import notification from '../../User/UserDashBoardImg/notification.png';
-import api from '../../Connect/Connect'
+import api from '../../Connect/Connect';
 
 function UserDashBoardHeader() {
-    const [founditem, setFoundItem] = useState('');
+    const [searchText, setSearchText] = useState('');
+    const [foundTasks, setFoundItem] = useState([]);
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+
     const [time, setTime] = useState(new Date());
     const [error, setError] = useState(null);
     const [isNotifOpen, setIsNotifOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
-    const [openCalendar,setOpenCalendar] = useState(false);
+    const [openCalendar, setOpenCalendar] = useState(false);
 
     function OpenNotification(e) {
         e.preventDefault();
-        setIsNotifOpen(!isNotifOpen); 
+        setIsNotifOpen(!isNotifOpen);
     }
 
     function OpenCalendar(e) {
         e.preventDefault();
-        setOpenCalendar(!openCalendar); 
+        setOpenCalendar(!openCalendar);
     }
-
-    
 
     useEffect(() => {
         const timer = setInterval(() => {
             setTime(new Date());
         }, 1000);
-
         return () => clearInterval(timer);
     }, []);
 
@@ -46,12 +46,9 @@ function UserDashBoardHeader() {
                     }
                 });
 
-                if (!response.ok) {
-                    throw new Error("Failed to fetch notifications");
-                }
-
+                if (!response.ok) throw new Error("Failed to fetch notifications");
                 const data = await response.json();
-                setNotifications(data); 
+                setNotifications(data);
             } catch (err) {
                 setError(err.message);
             }
@@ -59,44 +56,28 @@ function UserDashBoardHeader() {
 
         GetNotification();
     }, []);
-    
-    useEffect(() => {
-        function handleClickOutside(event) {
-            const popup = document.querySelector('.notification-popup');
-            if (popup && !popup.contains(event.target)) {
-                setIsNotifOpen(false);
-            }
-        }
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    useEffect(() => {
-    function handleClickOutsideCalendar(event) {
-        const calendarPopup = document.querySelector('.calendar-popup');
-        if (calendarPopup && !calendarPopup.contains(event.target)) {
-            setOpenCalendar(false);
-        }
-    }
-
-    document.addEventListener('mousedown', handleClickOutsideCalendar);
-    return () => document.removeEventListener('mousedown', handleClickOutsideCalendar);
-}, []);
-
-        async function FoundTask(e) {
+    async function FoundTask(e) {
         e.preventDefault();
         setError(null);
+
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(`${api}/api/ToDo/found-task`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
+                    "ngrok-skip-browser-warning": "true",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ text: founditem })
+                body: JSON.stringify({ foundTask: searchText })
             });
+
+            if (response.status === 404) {
+                setFoundItem([]);         
+                setIsSearchModalOpen(true); 
+                return;
+    }
 
             if (!response.ok) {
                 const text = await response.text();
@@ -104,7 +85,8 @@ function UserDashBoardHeader() {
             }
 
             const data = await response.json();
-            console.log("Found tasks:", data);
+            setFoundItem(data);
+            setIsSearchModalOpen(true);
         } catch (err) {
             setError(err.message);
         }
@@ -124,9 +106,9 @@ function UserDashBoardHeader() {
                         <div className="input-user-header">
                             <input
                                 type="text"
-                                value={founditem}
+                                value={searchText}
                                 placeholder='Enter your task here...'
-                                onChange={(e) => setFoundItem(e.target.value)}
+                                onChange={(e) => setSearchText(e.target.value)}
                             />
                             <button type="submit">
                                 <img src={search} alt="search" />
@@ -136,33 +118,24 @@ function UserDashBoardHeader() {
                 </div>
 
                 <div className='user-dashboard-header-info'>
-
                     <div className='user-dashboard-header-info-button' style={{ position: 'relative' }}>
-                        <button 
-                                className="btn-calendar" 
-                                onClick={OpenCalendar}
-                            >
-                                <img src={calendar} alt="calendar" />
-                            </button>
+                        <button className="btn-calendar" onClick={OpenCalendar}>
+                            <img src={calendar} alt="calendar" />
+                        </button>
 
-                            <button 
-                                className="btn-notification" 
-                                onClick={OpenNotification}
-                            >
-                                <img src={notification} alt="notifications" />
-                            </button>
+                        <button className="btn-notification" onClick={OpenNotification}>
+                            <img src={notification} alt="notifications" />
+                        </button>
 
                         {isNotifOpen && (
                             <div className="notification-popup">
-                                
                                 <ul>
-                                    {notifications.length > 0 ? (
-                                        notifications.map((item) => (
+                                    {notifications.length > 0
+                                        ? notifications.map((item) => (
                                             <li key={item.id}>{item.header}</li>
                                         ))
-                                    ) : (
-                                        <li>No new notifications</li>
-                                    )}
+                                        : <li>No new notifications</li>
+                                    }
                                 </ul>
                             </div>
                         )}
@@ -171,20 +144,45 @@ function UserDashBoardHeader() {
                             <div className="calendar-popup">
                                 <input type="date" />
                             </div>
-                         )}
+                        )}
                     </div>
 
                     <div className='user-dashboard-header-info-dato'>
-                        <div>
-                            {time.toLocaleDateString()}
-                        </div>
+                        <div>{time.toLocaleDateString()}</div>
                         <div className='user-dashboard-header-info-time-time'>
                             {time.toLocaleTimeString()}
                         </div>
                     </div>
-
                 </div>
             </div>
+
+            {isSearchModalOpen && (
+                <div className="search-modal-overlay" onClick={() => setIsSearchModalOpen(false)}>
+                    <div className="search-modal" onClick={(e) => e.stopPropagation()}>
+                        <h3>Found tasks</h3>
+
+                        {foundTasks.length === 0 ? (
+                            <p>Sorry, no tasks found.</p>
+                        ) : (
+                            <ul>
+                                {foundTasks.map(task => (
+                                    <li key={task.id}>
+                                        <strong>{task.header}</strong>
+                                        <p>{task.description}</p>
+                                        <small>
+                                            Deadline: {new Date(task.deadline).toLocaleString()}
+                                        </small>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
+                        <button className="close-modal" onClick={() => setIsSearchModalOpen(false)}>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -160,3 +160,68 @@
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
+
+.search-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.search-modal {
+    width: 600px;
+    max-height: 70vh;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    animation: modalFade 0.25s ease;
+}
+
+.search-modal h3 {
+    margin-bottom: 15px;
+}
+
+.search-modal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-modal li {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #f5f7ff;
+}
+
+.search-modal li:hover {
+    background: #e9ecff;
+}
+
+.close-modal {
+    margin-top: 15px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #5b8cff;
+    color: white;
+    font-weight: 600;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

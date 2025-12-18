@@ -12,7 +12,6 @@ function  UserDashPanelHelp () {
         { id: 4, title: "Can I edit a task?", text: "Yes, click the edit icon to modify the task." },
         { id: 5, title: "How to mark a task as completed?", text: "Check the box next to the task to mark it as completed." },
         { id: 6, title: "Are my tasks saved?", text: "Yes, all tasks are saved in the database and are available after reloading." },
-        { id: 7, title: "Can I filter tasks?", text: "Yes, you can filter tasks by status, priority, and date." },
         { id: 8, title: "Is registration required?", text: "Registration is needed to save your tasks online and access them from any device." },
         { id: 9, title: "What if something doesn't work?", text: "Try refreshing the page or contact us at support." },
     ];
