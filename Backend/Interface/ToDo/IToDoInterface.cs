@@ -18,11 +18,17 @@ namespace TodoList_Fullstack.Interface.ToDo
 
         Task<IEnumerable<TodoDto>> GetAllCompletedToDoItems(ClaimsPrincipal currentUser);
 
-        Task<bool> FoundTask(ClaimsPrincipal currentUser, string taskName);
+        Task<IEnumerable<TodoDto>> FoundTask(ClaimsPrincipal currentUser, string taskName);
 
         Task<bool> MarkTaskStart(ClaimsPrincipal currentUser, int id);
 
         Task<List<TodoDto>> RecentlyCreatedTask(ClaimsPrincipal currentUser);
+
+        Task<object> GetTaskStatistics(ClaimsPrincipal currentUser);
+
+        Task<bool> UpdateToDoItem(ClaimsPrincipal currentUser, int id, UpdateItemDto updateItemDto);
+
+
 
 
 

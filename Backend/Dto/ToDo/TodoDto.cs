@@ -28,6 +28,8 @@ namespace TodoList_Fullstack.Dto.ToDo
         [Required]
         public int CategoryId { get; set; }
 
-        public int UserId { get; set; } 
+        public int UserId { get; set; }
+
+        public bool IsStarted { get; set; }
     }
 }
