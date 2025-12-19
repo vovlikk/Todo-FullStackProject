@@ -13,9 +13,10 @@ import UserDashBoard from "../UserDashBoardLogicPanel/UserDashPanelDashBoard";
 
 
 
+
 function UserDashBoardPanel() {
   const user = useContext(UserContext)
-  const [showsection, setShowSection] = useState(null);
+  const [showsection, setShowSection] = useState("dash-board");
 
   function handleLogout () {
     localStorage.removeItem('token')
@@ -100,6 +101,7 @@ function UserDashBoardPanel() {
       </div>
 
       <div className="user-dash-board-content">
+        
         {showsection === "dash-board" && <UserDashBoard/>}
         {showsection === "add-task" && <UserDashPanelAddTask />}
         {showsection === "mytask" && <DashBordPanelMyTask/>}
@@ -107,6 +109,8 @@ function UserDashBoardPanel() {
         {showsection === "settings" && <DashBoardPanelSettings />}
         {showsection === "help" && <UserDashPanelFAQ />}
       </div>
+
+      
     </div>
   );
 }

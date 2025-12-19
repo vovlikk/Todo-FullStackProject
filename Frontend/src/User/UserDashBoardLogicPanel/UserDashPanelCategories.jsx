@@ -7,6 +7,8 @@ function Categories() {
     const [newCategory, setNewCategory] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const categoriesPerPage = 27; // 27 категорий на страницу
 
     useEffect(() => {
         fetchCategories();
@@ -91,6 +93,15 @@ function Categories() {
         }
     }
 
+    // Пагинация
+    const indexOfLastCategory = currentPage * categoriesPerPage;
+    const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+    const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
+
+    const totalPages = Math.ceil(categories.length / categoriesPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     if (loading) return <p>Загрузка категорий...</p>;
     if (error) return <p>{error}</p>;
 
@@ -111,22 +122,36 @@ function Categories() {
             {categories.length === 0 ? (
                 <p>Категории не найдены</p>
             ) : (
-                <ul className="category-list">
-                    {categories.map(cat => (
-                        <li key={cat.id} className="category-item">
-                            <span>{cat.categoryName}</span>
-                            {cat.userId && (
-                                <button
-                                    className="delete-btn"
-                                    onClick={() => DeleteCategory(cat.id)}
-                                    title="Удалить категорию"
-                                >
-                                    <span className="delete-icon">✕</span>
-                                </button>
-                            )}
-                        </li>
-                    ))}
-                </ul>
+                <>
+                    <ul className="category-list">
+                        {currentCategories.map(cat => (
+                            <li key={cat.id} className="category-item">
+                                <span>{cat.categoryName}</span>
+                                {cat.userId && (
+                                    <button
+                                        className="delete-btn"
+                                        onClick={() => DeleteCategory(cat.id)}
+                                        title="Удалить категорию"
+                                    >
+                                        <span className="delete-icon">✕</span>
+                                    </button>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+
+                    <div className="pagination">
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button
+                                key={i + 1}
+                                onClick={() => paginate(i + 1)}
+                                className={currentPage === i + 1 ? "active" : ""}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                    </div>
+                </>
             )}
         </div>
     );

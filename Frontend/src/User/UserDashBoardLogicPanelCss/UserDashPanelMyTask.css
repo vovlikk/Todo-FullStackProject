@@ -43,6 +43,8 @@
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 20px;
     padding: 0;
+
+    align-items: start;
 }
 
 .my-tasks-header ul li {
@@ -132,4 +134,88 @@
 
 .pagination span {
     font-weight: 600;
+}
+
+
+.my-tasks-header-name h3{
+    color: black;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px;
+  margin-top: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.edit-form input[type='text'],
+.edit-form textarea,
+.edit-form input[type='datetime-local'] {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-form input[type='text']:focus,
+.edit-form textarea:focus,
+.edit-form input[type='datetime-local']:focus {
+  border-color: #5b8cff;
+  box-shadow: 0 0 5px rgba(91,140,255,0.3);
+}
+
+.edit-form label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.edit-form .my-tasks-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-form .my-tasks-buttons button {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: 0.25s ease;
+}
+
+.edit-form .my-tasks-buttons button.save {
+  background-color: #10b981;
+}
+
+.edit-form .my-tasks-buttons button.save:hover {
+  background-color: #0f9f6f;
+}
+
+.edit-form .my-tasks-buttons button.cancel {
+  background-color: #ef4444;
+}
+
+.edit-form .my-tasks-buttons button.cancel:hover {
+  background-color: #dc2626;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }

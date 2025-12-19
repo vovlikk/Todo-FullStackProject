@@ -77,3 +77,8 @@
 .faq-answer-close:hover {
     background-color: #c9302c;
 }
+
+
+.faq-header h3{
+    color: black;
+}

@@ -13,6 +13,14 @@
     margin: 20px 100px;
 }
 
+.user-dash-panel-change-info-header{
+    margin: 0 auto;
+   
+}
+.user-dash-panel-change-info-header h1{
+    font-size: 1.7rem;
+}
+
 
 .user-dash-panel-text {
     font-size: 15px;
@@ -44,7 +52,8 @@
 }
 
 .user-dash-panel-info-section h2,
-.user-dash-panel-info-section h3 {
+.user-dash-panel-info-section h3,
+.user-dash-panel-info-section h1 {
     font-size: 18px;
     margin: 0;
     color: black;
