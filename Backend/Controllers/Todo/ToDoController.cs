@@ -19,10 +19,14 @@ namespace TodoList_Fullstack.Controllers.Todo
         }
 
         [HttpPost("found-task")]
-        public async Task<IActionResult> FoundTask([FromBody] string taskName)
+        public async Task<IActionResult> FoundTask([FromBody] FoundTaskDto foundTaskDto)
         {
             var user = User;
-            var result = await _toDoInterface.FoundTask(user, taskName);
+            var result = await _toDoInterface.FoundTask(user, foundTaskDto.FoundTask);
+            if (result == null || !result.Any())
+            {
+                return NotFound(new { Message = "No matching tasks found." });
+            }
             return Ok(result);
         }
 
@@ -104,6 +108,30 @@ namespace TodoList_Fullstack.Controllers.Todo
             var user = User;
             var result = await _toDoInterface.RecentlyCreatedTask(user);
             return Ok(result);
+        }
+
+        [HttpGet("get-task-statistics")]
+        public async Task<IActionResult> GetTaskStatistics()
+        {
+            var user = User;
+            var result = await _toDoInterface.GetTaskStatistics(user);
+            return Ok(result);
+        }
+
+        [HttpPatch]
+        [Route("update-todo-item/{id}")]
+        public async Task<IActionResult> UpdateToDoItem([FromRoute] int id, [FromBody] UpdateItemDto updateItemDto)
+        {
+            var user = User;
+            var result = await _toDoInterface.UpdateToDoItem(user, id, updateItemDto);
+            if (result)
+            {
+                return Ok(new { Message = "To-Do item updated successfully." });
+            }
+            else
+            {
+                return BadRequest(new { Message = "Failed to update To-Do item." });
+            }
         }
     }
 }
