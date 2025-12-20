@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../UserDashBoardLogicPanelCss/UserDashPanelMyTask.css";
 import api from "../../Connect/Connect";
+import { useSearchParams } from "react-router-dom";
 
 function UserDashMyTask() {
   const [tasks, setTasks] = useState([]);
@@ -8,6 +9,8 @@ function UserDashMyTask() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const tasksPerPage = 12;
+  const [searchParams] = useSearchParams();
+  const taskIdFromQuery = searchParams.get("taskId");
 
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editHeader, setEditHeader] = useState("");
@@ -39,6 +42,16 @@ function UserDashMyTask() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+  if (!taskIdFromQuery || tasks.length === 0) return;
+
+  const index = tasks.findIndex(t => String(t.id) === taskIdFromQuery);
+  if (index === -1) return;
+
+  const page = Math.floor(index / tasksPerPage) + 1;
+  setCurrentPage(page);
+}, [taskIdFromQuery, tasks]);
 
   useEffect(() => {
     fetchTasks();

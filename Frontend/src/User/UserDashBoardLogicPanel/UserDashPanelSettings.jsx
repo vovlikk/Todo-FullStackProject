@@ -14,7 +14,7 @@ function DashBoardPanelSettings() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
 
-  // Password validation function
+  
   const validatePassword = (password) => {
     const minLength = 8;
     const hasUpper = /[A-Z]/.test(password);
@@ -29,7 +29,7 @@ function DashBoardPanelSettings() {
     return null;
   }
 
-  // Change name
+ 
   async function changeName() {
     if (!username.trim()) return alert("Please enter a new name");
     try {
@@ -57,7 +57,7 @@ function DashBoardPanelSettings() {
     }
   }
 
-  // Change email
+  
   async function changeEmail() {
     if (!email.trim()) return alert("Please enter a new email");
     try {
@@ -85,7 +85,7 @@ function DashBoardPanelSettings() {
     }
   }
 
-  // Change password
+  
   async function changePassword() {
     const errorMsg = validatePassword(password);
     if (errorMsg) {

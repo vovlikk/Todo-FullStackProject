@@ -11,7 +11,7 @@ function WelcomeSupportForm({onClose}){
         e.preventDefault();
         setLoading(true);
         setError(null);
-        const info = {title:supportSms};
+        const info = {Title:supportSms};
         
         try{
             

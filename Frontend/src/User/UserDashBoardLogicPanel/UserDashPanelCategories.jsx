@@ -8,7 +8,7 @@ function Categories() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const categoriesPerPage = 27; // 27 категорий на страницу
+    const categoriesPerPage = 27; 
 
     useEffect(() => {
         fetchCategories();
@@ -93,7 +93,7 @@ function Categories() {
         }
     }
 
-    // Пагинация
+   
     const indexOfLastCategory = currentPage * categoriesPerPage;
     const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
     const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);

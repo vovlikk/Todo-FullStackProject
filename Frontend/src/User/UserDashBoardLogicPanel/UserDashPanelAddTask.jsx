@@ -11,21 +11,21 @@ function AddTask() {
   const [error, setError] = useState(null);
   const [userCategory, setUserCategory] = useState([]);
 
-  // Получение категорий пользователя
+  
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const token = localStorage.getItem("token"); // было localStorage('token') - ошибка
+        const token = localStorage.getItem("token"); 
         if (!token) throw new Error("Пользователь не авторизован!");
 
         const response = await fetch(`${api}/api/Category/get-user-category`, {
           headers: {
             "Content-Type": "application/json",
             "ngrok-skip-browser-warning": "true",
-            "Authorization": `Bearer ${token}`, // было "Authrorize" - ошибка
+            "Authorization": `Bearer ${token}`, 
           },
         });
 
@@ -45,7 +45,7 @@ function AddTask() {
     fetchCategories();
   }, []);
 
-  // Добавление новой задачи
+ 
   const handleAddTask = async (e) => {
     e.preventDefault();
 
