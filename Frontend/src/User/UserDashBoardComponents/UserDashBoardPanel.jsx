@@ -1,27 +1,23 @@
-import { useContext, useState } from "react";
+
+import { useContext, useState, useEffect } from "react";
 import "../UserDashBoardComponentsCss/UserDashBoardPanel.css";
 
 import logout from "../UserDashBoardImg/UserDashPanelImg/Logout.svg";
 import DashBoardPanelSettings from "../UserDashBoardLogicPanel/UserDashPanelSettings";
-import UserDashPanelAddTask from '../UserDashBoardLogicPanel/UserDashPanelAddTask'
-import DashBordPanelMyTask from '../UserDashBoardLogicPanel/UserDashPanelMyTask'
+import UserDashPanelAddTask from '../UserDashBoardLogicPanel/UserDashPanelAddTask';
+import DashBordPanelMyTask from '../UserDashBoardLogicPanel/UserDashPanelMyTask';
 import UserDashPanelFAQ from "../UserDashBoardLogicPanel/UserDashPanelFAQ";
 import { UserContext } from "../../DashBoards/UserDashBoard/UserDashBoard";
-import UserCategories from "../UserDashBoardLogicPanel/UserDashPanelCategories"
 import Categories from "../UserDashBoardLogicPanel/UserDashPanelCategories";
 import UserDashBoard from "../UserDashBoardLogicPanel/UserDashPanelDashBoard";
 
-
-
-
 function UserDashBoardPanel() {
-  const user = useContext(UserContext)
+  const user = useContext(UserContext);
   const [showsection, setShowSection] = useState("dash-board");
 
-  function handleLogout () {
-    localStorage.removeItem('token')
-
-     window.location.replace("/"); 
+  function handleLogout() {
+    localStorage.removeItem('token');
+    window.location.replace("/"); 
   }
 
   return (
@@ -52,6 +48,7 @@ function UserDashBoardPanel() {
               </button>
             </div>
 
+            
             <div className="user-panel-button">
               <button onClick={() => setShowSection('mytask')}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -101,19 +98,15 @@ function UserDashBoardPanel() {
       </div>
 
       <div className="user-dash-board-content">
-        
-        {showsection === "dash-board" && <UserDashBoard/>}
+        {showsection === "dash-board" && <UserDashBoard />}
         {showsection === "add-task" && <UserDashPanelAddTask />}
-        {showsection === "mytask" && <DashBordPanelMyTask/>}
-        {showsection === "categories" && <Categories/>}
+        {showsection === "mytask" && <DashBordPanelMyTask />}
+        {showsection === "categories" && <Categories />}
         {showsection === "settings" && <DashBoardPanelSettings />}
         {showsection === "help" && <UserDashPanelFAQ />}
       </div>
-
-      
     </div>
   );
 }
 
 export default UserDashBoardPanel;
-    

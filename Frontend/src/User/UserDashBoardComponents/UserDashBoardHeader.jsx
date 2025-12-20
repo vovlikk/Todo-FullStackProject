@@ -74,10 +74,10 @@ function UserDashBoardHeader() {
             });
 
             if (response.status === 404) {
-                setFoundItem([]);         
-                setIsSearchModalOpen(true); 
+                setFoundItem([]);
+                setIsSearchModalOpen(true);
                 return;
-    }
+            }
 
             if (!response.ok) {
                 const text = await response.text();
@@ -92,10 +92,69 @@ function UserDashBoardHeader() {
         }
     }
 
+   
+
+    const markStart = async (id) => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${api}/api/ToDo/mark-task-start/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) throw new Error(`Error ${response.status}`);
+            setFoundItem(prev =>
+                prev.map(t => t.id === id ? { ...t, isStarted: true } : t)
+            );
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const markDone = async (id) => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${api}/api/ToDo/mark-task-completed/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) throw new Error(`Error ${response.status}`);
+            setFoundItem(prev =>
+                prev.map(t => t.id === id ? { ...t, isCompleted: true } : t)
+            );
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${api}/api/ToDo/delete-task/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) throw new Error(`Error ${response.status}`);
+            setFoundItem(prev => prev.filter(t => t.id !== id));
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
     return (
         <div className='user-dashboard-header-container'>
             <div className='user-dashboard-header-sections'>
-
                 <div className='user-dashboard-header-logo'>
                     <h3>Dash</h3>
                     <h2>board</h2>
@@ -167,11 +226,21 @@ function UserDashBoardHeader() {
                             <ul>
                                 {foundTasks.map(task => (
                                     <li key={task.id}>
-                                        <strong>{task.header}</strong>
-                                        <p>{task.description}</p>
-                                        <small>
-                                            Deadline: {new Date(task.deadline).toLocaleString()}
-                                        </small>
+                                        <strong>{task.header}</strong> — {task.description}
+                                        <br />
+                                        Created: {new Date(task.atCreated).toLocaleString()}
+                                        <br />
+                                        Deadline: {new Date(task.deadline).toLocaleString()}
+                                        <br />
+                                        Started: {task.isStarted ? "Yes" : "No"}
+                                        <br />
+                                        Completed: {task.isCompleted ? "Completed" : "No"}
+
+                                        <div className="search-task-actions">
+                                            <button onClick={() => markStart(task.id)}> Start</button>
+                                            <button onClick={() => markDone(task.id)}> Done</button>
+                                            <button onClick={() => handleDelete(task.id)}> Delete</button>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
