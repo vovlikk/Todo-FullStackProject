@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoList_Fullstack.Data;
+using TodoList_Fullstack.Dto.Support;
 using TodoList_Fullstack.Interface.Support;
 using TodoList_Fullstack.Models.Support;
 
@@ -25,9 +26,9 @@ namespace TodoList_Fullstack.Controllers.Support
 
         [HttpPost("SendSupportSms")]
         
-        public async Task<IActionResult> SendSupportSms([FromBody] string sms)
+        public async Task<IActionResult> SendSupportSms([FromBody] SupportDto supportDto)
         {
-            var result = await _supportInterface.SendSmsToSupport(sms);
+            var result = await _supportInterface.SendSmsToSupport(supportDto.Title);
             if (result)
             {
                 return Ok(new { Message = "Support SMS sent successfully." });
