@@ -8,7 +8,7 @@ function Categories() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const categoriesPerPage = 27; 
+    const categoriesPerPage = 25; 
 
     useEffect(() => {
         fetchCategories();

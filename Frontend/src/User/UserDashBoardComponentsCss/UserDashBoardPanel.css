@@ -5,7 +5,7 @@
 
 .user-dash-board-panel-container{
     width: 300px;
-    height: 890px;
+    min-height: 917px;
     background-color: black;
     padding-top: 30px;
 }

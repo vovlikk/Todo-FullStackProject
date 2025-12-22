@@ -1,6 +1,6 @@
 import WelcomeLanding from './WelcomePage/WelcomeLanding/WelcomeLanding';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UserDashBoard from '../src/DashBoards/UserDashBoard/UserDashBoard';
+import UserDashBoard from './DashBoards/UserDashBoard/UserDashBoard';
 
 function App() {
   return (

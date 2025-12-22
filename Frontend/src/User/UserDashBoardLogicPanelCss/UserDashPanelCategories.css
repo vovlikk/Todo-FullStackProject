@@ -2,10 +2,10 @@
     width: 1300px;
     max-width: 1300px;
     min-height: 600px;
-    margin: 100px 50px;
+    margin: 40px 50px;
     border-radius: 12px;
     border: 1px solid #ccc;
-    padding: 40px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 40px;

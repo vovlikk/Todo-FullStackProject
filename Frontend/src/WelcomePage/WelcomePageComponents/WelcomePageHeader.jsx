@@ -1,44 +1,21 @@
-import { useState } from 'react';
-import WelcomeLogin from '../../Authentication/Login';
-import WelcomeRegister from '../../Authentication/Register';
-import WelcomeSupportForm from './WelcomeSupportForm';
 import '../WelcomePageComponentsCss/WelcomePageHeader.css';
 
-function WelcomePageHeader({ onClose }) {
-  const [activeModal, setActiveModal] = useState(null);
-
+function WelcomePageHeader({ setActivePage }) {
   return (
-    <div onClick={onClose}>
-      <header className="Welcomepage-header">
-        <div className="Welcome-header-section">
-          <div className="Welcomepage-header-logo">
-            <h3>Your To do list</h3>
-          </div>
-
-          <div className="Welcomepage-header-button">
-            <div>
-              <button onClick={() => setActiveModal("login")}>Login</button>
-            </div>
-            <div>
-              <button onClick={() => setActiveModal("register")}>Register</button>
-            </div>
-            <div>
-              <button onClick={() => setActiveModal("support")}>Support Form</button>
-            </div>
-          </div>
+    <header className="Welcomepage-header">
+      <div className="Welcome-header-section">
+        <div className="Welcomepage-header-logo">
+          <h3>Your To do list</h3>
         </div>
-      </header>
 
-      {activeModal === "login" && (
-        <WelcomeLogin onClose={() => setActiveModal(false)} />
-      )}
-      {activeModal === "register" && (
-        <WelcomeRegister onClose={() => setActiveModal(false)} />
-      )}
-      {activeModal === "support" && (
-        <WelcomeSupportForm onClose={() => setActiveModal(false)} />
-      )}
-    </div>
+        <div className="Welcomepage-header-button">
+          <button onClick={() => setActivePage('home')}>Home</button>
+          <button onClick={() => setActivePage('login')}>Login</button>
+          <button onClick={() => setActivePage('register')}>Register</button>
+          <button onClick={() => setActivePage('support')}>Support</button>
+        </div>
+      </div>
+    </header>
   );
 }
 
